@@ -1,98 +1,31 @@
-# VarrockStrayDog
+# Varrock Stray Dog
 
-This project was generated using [Nx](https://nx.dev).
+Varrock stray dog is a discord loot & pet tracking bot for Oldschool Runescape.
 
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+It utilizes the [@nrwl/nx](https://github.com/nrwl/nx) monotrepo structure for [NestJS](https://github.com/nestjs/nest) & [Angular](https://github.com/angular/angular)
+Bot has been created with [Akairo](https://github.com/discord-akairo/discord-akairo) and a [custom nestjs library](https://github.com/Varrock-Stray-Dog/Varrock-Stray-Dog/tree/master/libs/discord)
 
-🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
+<p align="center">
+    [![Connect to discord](https://github.com/Varrock-Stray-Dog/Varrock-Stray-Dog/raw/master/apps/web/src/assets/connect-to-discord.png)](https://discord.com/oauth2/authorize?client_id=746303551722094623&scope=bot&permissions=268627008)
+</p>
+    
+## Apps
 
-## Quick Start & Documentation
+### Website
 
-[Nx Documentation](https://nx.dev/angular)
+The website for the bot, this will include a management system to manage your guild's loot & pets. This can also be done through commands.
 
-[10-minute video showing all Nx features](https://nx.dev/angular/getting-started/what-is-nx)
+### Api
 
-[Interactive Tutorial](https://nx.dev/angular/tutorial/01-create-application)
+The GraphQL api for the website which communicates with the bot to gain information and access to the database.
 
-## Adding capabilities to your workspace
+### Bot
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+The Discord Akairo bot which communicates with the database (Prisma & PostgresQL) and Discord (Akairo framework)
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
 
-Below are our core plugins:
+## Libraries
 
-- [Angular](https://angular.io)
-  - `ng add @nrwl/angular`
-- [React](https://reactjs.org)
-  - `ng add @nrwl/react`
-- Web (no framework frontends)
-  - `ng add @nrwl/web`
-- [Nest](https://nestjs.com)
-  - `ng add @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `ng add @nrwl/express`
-- [Node](https://nodejs.org)
-  - `ng add @nrwl/node`
+### @varrock-stray-dog/discord
 
-There are also many [community plugins](https://nx.dev/nx-community) you could add.
-
-## Generate an application
-
-Run `ng g @nrwl/angular:app my-app` to generate an application.
-
-> You can use any of the plugins above to generate applications as well.
-
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-## Generate a library
-
-Run `ng g @nrwl/angular:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are sharable across libraries and applications. They can be imported from `@varrock-stray-dog/mylib`.
-
-## Development server
-
-Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng g component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev/angular) to learn more.
-
-## ☁ Nx Cloud
-
-### Computation Memoization in the Cloud
-
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+This is a akairo wrapper for nestjs. This is under heavy development and mostly targeted for `Varrock Stray Dog`, this might not be the solution to your bot.
