@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'RuneScape UF Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('RuneScape UF Regular'), url('/assets/fonts/runescape_uf.woff') format('woff');
+    }
+
+html, body {
+    padding: 0;
+    margin: 0;
+    font-family: 'RuneScape UF Regular';
+}
