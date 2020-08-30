@@ -48,6 +48,9 @@ export class DiscordClient extends AkairoClient
         this.listenerHandler = new ListenerHandler(this, {});
         this.commandHandler = new CommandHandler(this, {
             prefix: config.defaultPrefix,
+            commandUtil: true,
+            handleEdits: true,
+            storeMessages: true,
         });
 
         this.listenerHandler.setEmitters({

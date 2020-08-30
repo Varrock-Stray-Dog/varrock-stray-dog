@@ -1,0 +1,24 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Pet",
+      "field": "user_id",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Pet",
+      "field": "guild_id",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Pet",
+      "field": "discord_id"
+    }
+  ]
+}

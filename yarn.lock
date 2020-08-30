@@ -4408,6 +4408,11 @@ discord.js@^12.3.1:
     tweetnacl "^1.0.3"
     ws "^7.3.1"
 
+discordjs-prompter@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/discordjs-prompter/-/discordjs-prompter-2.0.4.tgz#f253e136e3ac6fad4b623be71387f9031eb3035f"
+  integrity sha512-sILmFFTDcW20DePWlk0VBnGLxMzElRNzQeo3NLRSWKsURB9DRpc1XVtQWUUwH0NETfaRsd93IUzmR30M2VSnqw==
+
 dns-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/dns-equal/-/dns-equal-1.0.0.tgz#b39e7f1da6eb0a75ba9c17324b34753c47e0654d"
@@ -5436,6 +5441,11 @@ functional-red-black-tree@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
+
+fuse.js@^6.4.1:
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-6.4.1.tgz#76f1b4ab9cd021b854a68381b35628033d27507e"
+  integrity sha512-+hAS7KYgLXontDh/vqffs7wIBw0ceb9Sx8ywZQhOsiQGcSO5zInGhttWOUYQYlvV/yYMJOacQ129Xs3mP3+oZQ==
 
 genfun@^5.0.0:
   version "5.0.0"

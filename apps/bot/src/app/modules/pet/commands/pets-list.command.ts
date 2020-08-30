@@ -9,6 +9,7 @@ import { Embeds } from 'discord-paginationembed';
 import { PetService } from '../pet.service';
 import { Injectable } from '@nestjs/common';
 import { PETS } from 'libs/constants/src/lib/pets';
+import { woofify } from '../../../util/woof';
 
 @Injectable()
 export class PetsListCommand extends Command {
@@ -20,34 +21,40 @@ export class PetsListCommand extends Command {
                 content: 'Show pets list',
                 usage: '',
             },
-            flags: ['--all'],
             args: [
-                {
-                    id: 'user',
-                    type: 'user',
-                    default: (message) => message.author,
-                },
                 {
                     id: 'all',
                     match: 'flag',
                     flag: ['--all', '-a'],
                 },
+                {
+                    id: 'user',
+                    type: 'user',
+                    match: 'rest',
+                    default: (message) => message.author,
+                },
             ],
         });
     }
 
-    async exec(message: Message, { all, user }: { all: boolean; user: User }) {
-        const pets = await this._petService.getByAuthorId(user.id);
+    async exec(message: Message, { user, all }: { user: User; all: boolean }) {
+        return message.util.send(`I got:\nUser: <@${user.id}>\nAll: ${all}`);
+        const pets = await this._petService.getByAuthorAndGuildId(
+            user.id,
+            message.guild.id
+        );
+
+        console.log(all);
 
         if (!pets.length && !all) {
             if (message.author?.id === user?.id) {
-                return message.channel.send(
-                    '**Woof!**\nYou have no registered pets yet.'
+                return message.util.send(
+                    woofify('You have no registered pets yet.')
                 );
             }
 
-            return message.channel.send(
-                '**Woof!**\nThat user has no registered pets yet.'
+            return message.util.send(
+                woofify('That user has no registered pets yet.')
             );
         }
 

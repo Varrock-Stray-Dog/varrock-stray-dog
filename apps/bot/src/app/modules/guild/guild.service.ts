@@ -9,6 +9,6 @@ export class GuildService {
     constructor(private _client: DiscordClient) {}
 
     public guildById(id) {
-        return this._client.guilds.resolveID(id);
+        return this._client.guilds.resolve(id);
     }
 }

@@ -44,7 +44,7 @@ export class HelpCommand extends Command {
                 );
             }
 
-            return message.channel.send(embed);
+            return message.util?.send(embed);
         }
 
         const embed = new MessageEmbed()
@@ -69,6 +69,6 @@ export class HelpCommand extends Command {
                 true
             );
 
-        return message.channel.send(embed);
+        return message.util?.send(embed);
     }
 }

@@ -7,11 +7,11 @@ export class GuildCommand extends Command {
     constructor(private _guildService: GuildService) {
         super('guild', {
             aliases: ['guild'],
+            category: 'guild',
         });
     }
 
     exec(message: Message) {
-        console.log(this._guildService.constructor.name);
         const guild = this._guildService.guildById(message.guild.id);
         return message.reply(`\`\`\`\n${JSON.stringify(guild)}\n\`\`\``);
     }
