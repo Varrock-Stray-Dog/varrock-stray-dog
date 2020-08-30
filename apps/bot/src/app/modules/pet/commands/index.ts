@@ -1,4 +1,4 @@
 import { PetsCommand } from './pets.command';
-import { PetsShowCommand } from './pets-show.command';
+import { PetsListCommand } from './pets-list.command';
 
-export const Commands = [PetsCommand, PetsShowCommand];
+export const Commands = [PetsCommand, PetsListCommand];

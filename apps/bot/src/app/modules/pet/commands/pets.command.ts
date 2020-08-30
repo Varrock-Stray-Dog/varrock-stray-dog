@@ -1,5 +1,6 @@
 import { Command, Flag } from '@varrock-stray-dog/discord';
 import { Injectable } from '@nestjs/common';
+import { prefix } from '../../../util/prefix';
 
 @Injectable()
 export class PetsCommand extends Command {
@@ -11,7 +12,7 @@ export class PetsCommand extends Command {
             description: {
                 content: 'pets command',
                 usage: '<method> <...arguments>',
-                examples: ['show'],
+                examples: ['list'],
             },
             flags: ['--all'],
         });
@@ -19,9 +20,11 @@ export class PetsCommand extends Command {
 
     public *args() {
         const method = yield {
-            type: [['pets.show', 'show']],
-            default: 'pets.show',
-            match: 'phrase',
+            type: [['pets.list', 'list']],
+            otherwise: (message) =>
+                `**Woof!**\nCheckout \`${prefix(
+                    message
+                )}help pets\` on how to use this command`,
         };
 
         return Flag.continue(method);

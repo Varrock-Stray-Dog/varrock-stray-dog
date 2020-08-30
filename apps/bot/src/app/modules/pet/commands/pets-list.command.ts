@@ -11,9 +11,9 @@ import { Injectable } from '@nestjs/common';
 import { PETS } from 'libs/constants/src/lib/pets';
 
 @Injectable()
-export class PetsShowCommand extends Command {
+export class PetsListCommand extends Command {
     constructor(private _petService: PetService) {
-        super('pets.show', {
+        super('pets.list', {
             category: 'pets',
             ratelimit: 2,
             description: {
@@ -24,7 +24,7 @@ export class PetsShowCommand extends Command {
             args: [
                 {
                     id: 'user',
-                    type: 'userMention',
+                    type: 'user',
                     default: (message) => message.author,
                 },
                 {
@@ -40,7 +40,15 @@ export class PetsShowCommand extends Command {
         const pets = await this._petService.getByAuthorId(user.id);
 
         if (!pets.length && !all) {
-            return message.reply('You have no registered pets yet, Woof!');
+            if (message.author?.id === user?.id) {
+                return message.channel.send(
+                    '**Woof!**\nYou have no registered pets yet.'
+                );
+            }
+
+            return message.channel.send(
+                '**Woof!**\nThat user has no registered pets yet.'
+            );
         }
 
         let chunked = [];
@@ -75,10 +83,9 @@ export class PetsShowCommand extends Command {
 
         new Embeds()
             .setArray(embeds)
-            .setAuthorizedUsers([message.author.id])
+            .setAuthorizedUsers([user.id])
             .setChannel(message.channel as TextChannel)
-            .setAuthor(message.author.username, message.author.avatarURL())
-            .setTitle(`${message.author.username}'s Pets`)
+            .setAuthor(`${user.username}'s Pets`, user.avatarURL())
             .setPageIndicator('footer')
             .build();
     }
