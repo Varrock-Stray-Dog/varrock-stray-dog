@@ -24,7 +24,7 @@ export class HelpCommand extends Command {
     }
 
     public async exec(message: Message, { command }: { command: Command }) {
-        const prefix = (this.handler.prefix as PrefixSupplier)(message);
+        const prefix = await (this.handler.prefix as PrefixSupplier)(message);
         if (!command) {
             const embed = new MessageEmbed().setColor(3447003).addField(
                 '❯ Commands',
