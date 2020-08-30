@@ -61,17 +61,24 @@ export class DiscordClient extends AkairoClient
     }
 
     public registerCommands(commands: Command[]) {
-        commands.map((command) => this.commandHandler.register(command));
+        commands.map((command) => {
+            this.commandHandler.register(command);
+            this._logger.log(`[Command] Loaded ${command.id}`);
+        });
     }
 
     public registerInhibitors(inhibitors: Inhibitor[]) {
-        inhibitors.map((inhibitor) =>
-            this.inhibitorHandler.register(inhibitor)
-        );
+        inhibitors.map((inhibitor) => {
+            this.inhibitorHandler.register(inhibitor);
+            this._logger.log(`[Inhibitor] Loaded ${inhibitor.id}`);
+        });
     }
 
     public registerListeners(listeners: Listener[]) {
-        listeners.map((listener) => this.listenerHandler.register(listener));
+        listeners.map((listener) => {
+            this.listenerHandler.register(listener);
+            this._logger.log(`[Listener] Loaded ${listener.id}`);
+        });
     }
 
     public async init() {

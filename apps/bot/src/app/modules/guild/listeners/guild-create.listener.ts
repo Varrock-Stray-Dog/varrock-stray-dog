@@ -5,7 +5,7 @@ export class GuildCreateListener extends Listener {
     private _logger: Logger = new Logger('Guild Create Listener');
 
     constructor() {
-        super('guild-join', {
+        super('guild.create', {
             emitter: 'client',
             event: 'guildCreate',
         });

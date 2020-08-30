@@ -1,41 +1,41 @@
 {
-  "npmScope": "varrock-stray-dog",
-  "affected": {
-    "defaultBase": "master"
-  },
-  "implicitDependencies": {
-    "angular.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
+    "npmScope": "varrock-stray-dog",
+    "affected": {
+        "defaultBase": "master"
     },
-    "tsconfig.base.json": "*",
-    "tslint.json": "*",
-    "nx.json": "*"
-  },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
-      }
+    "implicitDependencies": {
+        "angular.json": "*",
+        "package.json": {
+            "dependencies": "*",
+            "devDependencies": "*"
+        },
+        "tsconfig.base.json": "*",
+        "tslint.json": "*",
+        "nx.json": "*"
+    },
+    "tasksRunnerOptions": {
+        "default": {
+            "runner": "@nrwl/workspace/tasks-runners/default",
+            "options": {
+                "cacheableOperations": ["build", "lint", "test", "e2e"]
+            }
+        }
+    },
+    "projects": {
+        "web": {
+            "tags": ["app"]
+        },
+        "api": {
+            "tags": ["app"]
+        },
+        "constants": {
+            "tags": ["lib"]
+        },
+        "discord": {
+            "tags": ["app"]
+        },
+        "bot": {
+            "tags": ["lib"]
+        }
     }
-  },
-  "projects": {
-    "web": {
-      "tags": []
-    },
-    "api": {
-      "tags": []
-    },
-    "interfaces": {
-      "tags": []
-    },
-    "discord": {
-      "tags": []
-    },
-    "bot": {
-      "tags": []
-    }
-  }
 }

@@ -1,5 +1,5 @@
 import { GuildService } from '../guild.service';
-import { Command, CommandHandler } from '@varrock-stray-dog/discord';
+import { Command, Message } from '@varrock-stray-dog/discord';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -10,7 +10,8 @@ export class GuildCommand extends Command {
         });
     }
 
-    exec(message) {
+    exec(message: Message) {
+        console.log(this._guildService.constructor.name);
         const guild = this._guildService.guildById(message.guild.id);
         return message.reply(`\`\`\`\n${JSON.stringify(guild)}\n\`\`\``);
     }

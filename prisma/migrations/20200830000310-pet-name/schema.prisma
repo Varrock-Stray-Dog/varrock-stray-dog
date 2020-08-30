@@ -1,0 +1,22 @@
+// This is your Prisma schema file,
+datasource db {
+	provider	= "postgresql"
+	url = "***"
+}
+
+generator client {
+	provider	= "prisma-client-js"
+}
+
+model Guild {
+	id				String @id @default(uuid())
+	discord_id		String @unique
+	prefix			String @default("!")
+}
+
+model Pet {
+	id				String @id @default(uuid())
+	discord_id		String @unique
+	name			String
+	kc				Int
+}

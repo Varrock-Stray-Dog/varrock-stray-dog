@@ -1,7 +1,7 @@
-import { AkairoOptions, Command } from 'discord-akairo';
+import { AkairoOptions, PrefixSupplier } from 'discord-akairo';
 
 export interface DiscordConfig extends AkairoOptions {
-    defaultPrefix: string;
+    defaultPrefix: string | PrefixSupplier;
     shardId: string;
     token: string;
 }

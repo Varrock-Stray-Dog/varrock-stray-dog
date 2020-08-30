@@ -1,17 +1,21 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-import { GuildModule } from './modules/guild';
 import { DiscordModule } from '@varrock-stray-dog/discord';
-import { UserModule } from './modules/user/user.module';
 
-const Modules = [GuildModule, UserModule];
+import { GuildModule } from './modules/guild';
+import { PetModule } from './modules/pet/pet.module';
+import { UtilModule } from './modules/util/util.module';
+
+import { prefix } from './util/prefix';
+
+const Modules = [UtilModule, GuildModule, PetModule];
 
 @Module({
     imports: [
         ConfigModule.forRoot(),
         DiscordModule.forRoot({
-            defaultPrefix: '!',
+            defaultPrefix: prefix,
             shardId: 'stray-dog',
             token: process.env.BOT_TOKEN,
             ownerID: process.env.OWNER_ID,
@@ -19,6 +23,5 @@ const Modules = [GuildModule, UserModule];
 
         ...Modules,
     ],
-    exports: [],
 })
 export class AppModule {}

@@ -1,4 +1,4 @@
-import { Module, Inject } from '@nestjs/common';
+import { Module, Inject, OnModuleInit } from '@nestjs/common';
 import { DiscordConfig, DiscordFeatureConfig } from './discord.interfaces';
 import { DiscordClient } from './discord.client';
 import {
@@ -25,7 +25,7 @@ import {
     ],
     exports: [DiscordClient],
 })
-export class DiscordModule {
+export class DiscordModule implements OnModuleInit {
     constructor(
         private _client: DiscordClient,
         @Inject(DISCORD_CLIENT_INHIBITORS_TOKEN)
@@ -34,7 +34,9 @@ export class DiscordModule {
         private _listeners: Listener[],
         @Inject(DISCORD_CLIENT_COMMANDS_TOKEN)
         private _commands: Command[]
-    ) {
+    ) {}
+
+    onModuleInit() {
         this._client.registerInhibitors(this._inhibitors);
         this._client.registerListeners(this._listeners);
         this._client.registerCommands(this._commands);
