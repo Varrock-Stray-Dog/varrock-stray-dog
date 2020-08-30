@@ -1,7 +1,8 @@
 import { Listener, Command } from 'discord-akairo';
-import { Logger } from '@nestjs/common';
+import { Logger, Injectable } from '@nestjs/common';
 import { Message } from '@varrock-stray-dog/discord';
 
+@Injectable()
 export class CommandStartedListener extends Listener {
     private _logger: Logger = new Logger('Command Listener');
 

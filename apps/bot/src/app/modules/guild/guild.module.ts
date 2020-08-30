@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { DiscordModule } from '@varrock-stray-dog/discord';
+import { PrismaClient } from '../../prisma.client';
 
 import { GuildService } from './guild.service';
 import { GuildController } from './guild.controller';
@@ -12,10 +13,10 @@ import { Listeners } from './listeners';
         DiscordModule.forFeature({
             commands: Commands,
             listeners: Listeners,
-            inject: [GuildService],
+            inject: [GuildService, PrismaClient],
         }),
     ],
     controllers: [GuildController],
-    providers: [GuildService],
+    providers: [GuildService, PrismaClient],
 })
 export class GuildModule {}

@@ -1,3 +1,3 @@
-import { GuildCommand } from './guild.command';
+import { PrefixCommand } from './prefix/prefix.command';
 
-export const Commands = [GuildCommand];
+export const Commands = [PrefixCommand];

@@ -1,17 +1,20 @@
 import { Listener, Guild } from '@varrock-stray-dog/discord';
-import { Logger } from '@nestjs/common';
+import { Logger, Injectable } from '@nestjs/common';
+import { GuildService } from '../guild.service';
 
+@Injectable()
 export class GuildCreateListener extends Listener {
     private _logger: Logger = new Logger('Guild Create Listener');
 
-    constructor() {
+    constructor(private _guildService: GuildService) {
         super('guild.create', {
             emitter: 'client',
             event: 'guildCreate',
         });
     }
 
-    exec(guild: Guild) {
+    async exec(guild: Guild) {
         this._logger.log(`Joined ${guild.name}`);
+        await this._guildService.findOrCreate(guild.id);
     }
 }

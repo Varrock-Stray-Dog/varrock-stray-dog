@@ -8,6 +8,7 @@ import { PetModule } from './modules/pet/pet.module';
 import { UtilModule } from './modules/util/util.module';
 
 import { prefix } from './util/prefix';
+import { Listeners } from './listeners';
 
 const Modules = [UtilModule, GuildModule, PetModule];
 
@@ -19,6 +20,9 @@ const Modules = [UtilModule, GuildModule, PetModule];
             shardId: 'stray-dog',
             token: process.env.BOT_TOKEN,
             ownerID: process.env.OWNER_ID,
+        }),
+        DiscordModule.forFeature({
+            listeners: Listeners,
         }),
 
         ...Modules,
