@@ -1,25 +1,34 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
+import 'reflect-metadata';
 
-import './app/util/array';
+import { environment } from './environments/environment.prod';
+import { StrayDogClient, clientErrorWrapper } from '.';
 
-import { NestFactory } from '@nestjs/core';
+import { inspect } from 'util';
+inspect.defaultOptions.depth = 1;
 
-import { AppModule } from './app/app.module';
+// eslint-disable-next-line @typescript-eslint/naming-convention
+// const __rootdir = __dirname || process.cwd();
 
-import { Transport } from '@nestjs/microservices';
+// if (TOKENS.SENTRY_DNS) {
+//     Sentry.init({
+//         dsn: TOKENS.SENTRY_DNS,
+//         integrations: [
+//             new Sentry.Integrations.Modules(),
+//             new Sentry.Integrations.FunctionToString(),
+//             new Sentry.Integrations.LinkedErrors(),
+//             new Sentry.Integrations.Console(),
+//             new Sentry.Integrations.Http({ breadcrumbs: true, tracing: true }),
+//             new Dedupe(),
+//             new ExtraErrorData({ depth: 2 }),
+//             new RewriteFrames({ root: __rootdir })
+//         ]
+//     });
+// }
 
-async function bootstrap() {
-    const app = await NestFactory.createMicroservice(AppModule, {
-        transport: Transport.REDIS,
-        options: {
-            url: process.env.REDIS_URL,
-        },
-    });
+const client = new StrayDogClient(environment);
 
-    await app.listen(null);
-}
+const main = async () => {
+    await client.login(environment.token);
+};
 
-bootstrap();
+clientErrorWrapper(client, main());

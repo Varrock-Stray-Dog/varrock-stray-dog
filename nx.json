@@ -31,11 +31,8 @@
         "constants": {
             "tags": ["lib"]
         },
-        "discord": {
-            "tags": ["app"]
-        },
         "bot": {
-            "tags": ["lib"]
+            "tags": ["app"]
         }
     }
 }

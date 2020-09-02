@@ -1,0 +1,10 @@
+{
+    "DEFAULT": "I have no clue what {{key}} means in the en-US language.",
+    "PREFIX": {
+        "GUILD": "My prefix for this guild is: `{{prefix}}`",
+        "BASE": "My prefix is: `{{prefix}}`"
+    },
+    "COMMANDS": {
+        "UNKNOWN": "Sorry, I have no memory of that command.."
+    }
+}
