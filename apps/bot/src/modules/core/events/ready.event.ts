@@ -13,7 +13,7 @@ export class ReadyEvent extends Event {
             (guild) => guild.id
         );
         await this.context.client.nestjs.send(
-            'Guild/findOrCreateMultiple',
+            'Settings/findOrCreateMultiple',
             guildIds
         );
         this.context.client.logger.info(

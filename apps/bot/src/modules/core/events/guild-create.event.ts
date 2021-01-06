@@ -8,7 +8,10 @@ export class GuildCreateEvent extends Event {
     }
 
     async run(guild) {
-        await this.context.client.nestjs.send('Guild/findOrCreate', guild?.id);
+        await this.context.client.nestjs.send(
+            'Settings/findOrCreate',
+            guild?.id
+        );
         this.context.client.logger.info(
             `[Guild Create] Joined guild ${guild?.name}.`
         );

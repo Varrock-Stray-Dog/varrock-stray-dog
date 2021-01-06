@@ -1,3 +1,4 @@
+import { Settings } from '@prisma/client';
 import { StrayDogClient } from '../client';
 import { OPTIONAL_DEFAULT } from '../constants';
 import { CacheKey } from '../types/enums';
@@ -32,23 +33,34 @@ export class CacheManager {
 
     public async getGuildPrefix(id: string) {
         const prefix = await this.get(id, CacheKey.GuildPrefix);
-        if (prefix !== null) return prefix;
+        if (prefix !== null) {
+            return prefix;
+        }
 
-        const guild = await this.client.nestjs.send('Guild/findOrCreate', id);
+        const {
+            prefix: settingsPrefix,
+        }: Settings = await this.client.nestjs.send('Settings/findOne', id);
 
-        await this.set(id, guild.prefix, CacheKey.GuildPrefix);
+        await this.set(id, settingsPrefix, CacheKey.GuildPrefix);
 
-        return [guild.prefix, OPTIONAL_DEFAULT];
+        console.log(settingsPrefix);
+
+        return [settingsPrefix, OPTIONAL_DEFAULT];
     }
 
     public async getLanguage(id: string) {
         const lang = await this.get(id, CacheKey.GuildLanguage);
-        if (lang !== null && lang.length) return lang;
+        if (lang !== null && lang.length) {
+            return lang;
+        }
 
-        const guild = await this.client.nestjs.send('Guild/findOrCreate', id);
+        const { language }: Settings = await this.client.nestjs.send(
+            'Settings/findOne',
+            id
+        );
 
-        await this.set(id, guild.language, CacheKey.GuildLanguage);
+        await this.set(id, language, CacheKey.GuildLanguage);
 
-        return guild.language || 'en-US';
+        return language || 'en-US';
     }
 }

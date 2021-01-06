@@ -1,0 +1,13 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Query {
+  guild(guildId: String!): SettingsModel!
+}
+
+type SettingsModel {
+  guildId: String!
+  id: ID!
+  prefix: String!
+}

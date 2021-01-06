@@ -3,32 +3,32 @@ import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '../prisma/prisma.client';
 
 @Injectable()
-export class GuildService {
+export class SettingsService {
     constructor(private _prisma: PrismaClient) {}
 
-    public guildById(id: string) {
-        return this._prisma.guild.findOne({
+    public byGuildId(guildId: string) {
+        return this._prisma.settings.findOne({
             where: {
-                discord_id: id,
+                guildId,
             },
         });
     }
 
-    async findOne(id: string) {
-        return this._prisma.guild.findOne({
+    async findOneByGuildId(guildId: string) {
+        return this._prisma.settings.findOne({
             where: {
-                discord_id: id,
+                guildId,
             },
         });
     }
 
-    async findOrCreate(id: string) {
-        const guild = await this.findOne(id);
+    async findOrCreate(guildId: string) {
+        const guild = await this.findOneByGuildId(guildId);
 
         if (!guild) {
-            return this._prisma.guild.create({
+            return this._prisma.settings.create({
                 data: {
-                    discord_id: id,
+                    guildId,
                     prefix: process.env.BOT_PREFIX,
                 },
             });
@@ -37,10 +37,10 @@ export class GuildService {
         return guild;
     }
 
-    public async getPrefix(id: string) {
-        const guild = await this._prisma.guild.findOne({
+    public async getPrefix(guildId: string) {
+        const guild = await this._prisma.settings.findOne({
             where: {
-                discord_id: id,
+                guildId,
             },
         });
 
@@ -51,13 +51,13 @@ export class GuildService {
         return guild.prefix;
     }
 
-    public setPrefix(id: string, prefix: string) {
-        return this._prisma.guild.update({
+    public setPrefix(guildId: string, prefix: string) {
+        return this._prisma.settings.update({
             data: {
                 prefix,
             },
             where: {
-                discord_id: id,
+                guildId,
             },
         });
     }
