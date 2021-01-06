@@ -24,4 +24,19 @@ export class GuildController {
         this._logger.log('findOrCreate');
         return this._service.findOrCreate(guildId);
     }
+
+    @MessagePattern({ cmd: 'Guild/findOne' })
+    async find(guildId: string): Promise<Guild> {
+        this._logger.log('findOne');
+        return this._service.findOne(guildId);
+    }
+
+    @MessagePattern({ cmd: 'Guild/findOrCreateMultiple' })
+    async findOrCreateMultiple(guildIds: string[]): Promise<Guild[]> {
+        this._logger.log('findOrCreateMultiple');
+
+        return Promise.all(
+            guildIds.map((guildId) => this._service.findOrCreate(guildId))
+        );
+    }
 }

@@ -1,7 +1,7 @@
 import { PieceContext, Event, Events } from '@sapphire/framework';
-import { woofify } from '../../lib/util';
+import { woofify } from '../../../lib/util';
 
-export class MessageRunEvent extends Event {
+export class CommandRunEvent extends Event {
     constructor(context: PieceContext) {
         super(context, {
             event: Events.CommandRun,
@@ -9,6 +9,8 @@ export class MessageRunEvent extends Event {
     }
 
     run(message, command, parameters, name, prefix) {
-        this.client.logger.info(woofify(`Running command "${name}"`, false));
+        this.context.client.logger.info(
+            woofify(`[Command Run] "${name}" by "${message.author.tag}"`, false)
+        );
     }
 }

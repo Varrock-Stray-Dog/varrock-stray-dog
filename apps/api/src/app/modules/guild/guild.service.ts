@@ -14,12 +14,16 @@ export class GuildService {
         });
     }
 
-    async findOrCreate(id: string) {
-        const guild = await this._prisma.guild.findOne({
+    async findOne(id: string) {
+        return this._prisma.guild.findOne({
             where: {
                 discord_id: id,
             },
         });
+    }
+
+    async findOrCreate(id: string) {
+        const guild = await this.findOne(id);
 
         if (!guild) {
             return this._prisma.guild.create({

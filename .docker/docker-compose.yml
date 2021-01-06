@@ -28,8 +28,8 @@ services:
     postgres:
         image: postgres
         environment:
-            - POSTGRES_USER=stray-dog
-            - POSTGRES_DB=stray-dog
-            - POSTGRES_PASSWORD=stray-dog
+            - 'POSTGRES_USER=$POSTGRES_USER'
+            - 'POSTGRES_DB=$POSTGRES_NAME'
+            - 'POSTGRES_PASSWORD=$POSTGRES_PASSWORD'
         ports:
             - '$EXPOSED_POSTGRES_PORT:5432'

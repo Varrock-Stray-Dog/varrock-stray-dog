@@ -1,17 +1,16 @@
 import { PieceContext, Event, Events } from '@sapphire/framework';
-import { woofify } from '../../lib/util';
+import { StrayDogMessage } from 'apps/bot/src/lib/extensions/message';
 
-export class MessageCommandUnkown extends Event {
+export class UnknownCommandEvent extends Event {
     constructor(context: PieceContext) {
         super(context, {
             event: Events.UnknownCommand,
         });
     }
 
-    run(message, name, prefix) {
-        this.client.logger.warn(
-            '[MessageCommandUnkown] ' +
-                woofify(`Unkown command "${name}"`, false)
+    run(message: StrayDogMessage, name: string) {
+        this.context.client.logger.warn(
+            `[Unkown Command] "${name}" by "${message.author.tag}"`
         );
         message.sendWoofTranslated('default:COMMANDS.UNKNOWN');
     }

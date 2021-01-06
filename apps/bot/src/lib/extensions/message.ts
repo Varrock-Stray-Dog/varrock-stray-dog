@@ -1,15 +1,14 @@
-import { SapphireMessage } from '@sapphire/framework';
 import {
-    Message,
     MessageAdditions,
     MessageOptions,
     SplitOptions,
     Structures,
+    Message,
 } from 'discord.js';
 import { woofify } from '../util';
 
 export class StrayDogMessage extends Structures.get('Message')
-    implements SapphireMessage {
+    implements Message {
     woofSend(
         content,
         options?: MessageOptions & { split: true | SplitOptions }
@@ -33,6 +32,7 @@ export class StrayDogMessage extends Structures.get('Message')
         key: string,
         options?: MessageOptions & { split: true | SplitOptions }
     ): Promise<Message[]>;
+
     public async sendWoofTranslated(
         key: string,
         valuesOrOptions?:
@@ -41,12 +41,12 @@ export class StrayDogMessage extends Structures.get('Message')
             | MessageAdditions,
         rawOptions?: MessageOptions
     ): Promise<Message | Message[]> {
-        const [values, options]: [unknown[], MessageOptions] =
-            typeof valuesOrOptions === 'undefined' ||
-            Array.isArray(valuesOrOptions)
+        const [values, options]: [any, MessageOptions] =
+            valuesOrOptions === undefined || Array.isArray(valuesOrOptions)
                 ? [valuesOrOptions ?? [], rawOptions ?? {}]
                 : [[], valuesOrOptions as MessageOptions];
-        const content = await this.fetchLanguageKey(key, ...values);
+
+        const content = await this.resolveKey(key, ...values);
         return this.channel.send(woofify(content), options);
     }
 }
