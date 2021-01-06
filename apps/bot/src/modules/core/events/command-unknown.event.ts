@@ -12,6 +12,6 @@ export class UnknownCommandEvent extends Event {
         this.context.client.logger.warn(
             `[Unkown Command] "${name}" by "${message.author.tag}"`
         );
-        message.sendWoofTranslated('default:COMMANDS.UNKNOWN');
+        message.sendWoofTranslated('COMMANDS.UNKNOWN');
     }
 }

@@ -1,4 +1,5 @@
 import { StrayDogClient } from '../client';
+import { OPTIONAL_DEFAULT } from '../constants';
 import { CacheKey } from '../types/enums';
 
 /*
@@ -37,7 +38,7 @@ export class CacheManager {
 
         await this.set(id, guild.prefix, CacheKey.GuildPrefix);
 
-        return guild.prefix;
+        return [guild.prefix, OPTIONAL_DEFAULT];
     }
 
     public async getLanguage(id: string) {
