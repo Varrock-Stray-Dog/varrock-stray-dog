@@ -11,4 +11,7 @@ export class SettingsModel implements Settings {
 
     @Field((type) => String)
     prefix: string;
+
+    @Field((type) => String)
+    language: string;
 }
