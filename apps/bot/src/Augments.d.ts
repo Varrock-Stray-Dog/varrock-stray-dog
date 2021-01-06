@@ -1,5 +1,6 @@
 import { Redis as IRedis } from 'ioredis';
 import { StrayDogLogger, CacheManager, NestjsHandler } from './libs/struct';
+import { Guild } from '@prisma/client';
 
 declare module 'discord.js' {
     interface Client {
@@ -8,5 +9,9 @@ declare module 'discord.js' {
 
         logger: StrayDogLogger;
         nestjs: NestjsHandler;
+    }
+
+    interface Guild {
+        databaseInstance(): Guild;
     }
 }
