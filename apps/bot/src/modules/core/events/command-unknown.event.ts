@@ -1,17 +1,16 @@
-import { PieceContext, Event, Events } from '@sapphire/framework';
+import { ApplyOptions } from '@sapphire/decorators';
+import { Event, Events, EventOptions } from '@sapphire/framework';
+import { StrayDogLogger } from 'apps/bot/src';
 import { StrayDogMessage } from 'apps/bot/src/lib/extensions/message';
 
+@ApplyOptions<EventOptions>({
+    event: Events.UnknownCommand,
+})
 export class UnknownCommandEvent extends Event {
-    constructor(context: PieceContext) {
-        super(context, {
-            event: Events.UnknownCommand,
-        });
-    }
+    public logger: StrayDogLogger = new StrayDogLogger('Command Unkown Event');
 
-    run(message: StrayDogMessage, name: string) {
-        this.context.client.logger.warn(
-            `[Unkown Command] "${name}" by "${message.author.tag}"`
-        );
-        message.sendWoofTranslated('COMMANDS.UNKNOWN');
+    async run(message: StrayDogMessage, name: string) {
+        this.logger.warn(`"${name}" by "${message.author.tag}"`);
+        message.sendWoofTranslated('commands.unkown');
     }
 }

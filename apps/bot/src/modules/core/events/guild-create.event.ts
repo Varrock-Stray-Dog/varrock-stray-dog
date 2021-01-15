@@ -1,19 +1,18 @@
-import { PieceContext, Event, Events } from '@sapphire/framework';
+import { ApplyOptions } from '@sapphire/decorators';
+import { Event, EventOptions, Events } from '@sapphire/framework';
+import { StrayDogLogger } from 'apps/bot/src';
 
+@ApplyOptions<EventOptions>({
+    event: Events.GuildCreate,
+})
 export class GuildCreateEvent extends Event {
-    constructor(context: PieceContext) {
-        super(context, {
-            event: Events.GuildCreate,
-        });
-    }
+    public logger: StrayDogLogger = new StrayDogLogger('Guild Create Event');
 
     async run(guild) {
         await this.context.client.nestjs.send(
             'Settings/findOrCreate',
             guild?.id
         );
-        this.context.client.logger.info(
-            `[Guild Create] Joined guild ${guild?.name}.`
-        );
+        this.logger.info(`Joined guild ${guild?.name}.`);
     }
 }

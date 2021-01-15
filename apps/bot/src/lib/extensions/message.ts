@@ -6,9 +6,19 @@ import {
     Message,
 } from 'discord.js';
 import { woofify } from '../util';
+import {
+    PromptMessage,
+    IPromptMessage,
+    IPromptMessageOptions,
+} from '@sapphire/discord.js-utilities';
 
 export class StrayDogMessage extends Structures.get('Message')
     implements Message {
+    replyPrompt(message: IPromptMessage, options?: IPromptMessageOptions) {
+        const handler = new PromptMessage(message, options);
+        return handler.run(this.channel, this.author);
+    }
+
     woofSend(
         content,
         options?: MessageOptions & { split: true | SplitOptions }

@@ -16,7 +16,7 @@ export class StrayDogClient extends SapphireClient {
     public readonly cache: CacheManager;
     public readonly redis: IRedis;
 
-    public logger: StrayDogLogger = new StrayDogLogger('Stray Dog');
+    public logger: StrayDogLogger = new StrayDogLogger('Stray Dog Client');
     public nestjs: NestjsHandler;
 
     public constructor(environment?: any) {
@@ -43,16 +43,21 @@ export class StrayDogClient extends SapphireClient {
     }
 
     private _registerPieces() {
-        for (let module of MODULES) {
-            this.arguments.registerPath(
-                join(__dirname, 'modules', module, 'arguments')
-            );
-            this.commands.registerPath(
-                join(__dirname, 'modules', module, 'commands')
-            );
-            this.events.registerPath(
-                join(__dirname, 'modules', module, 'events')
-            );
+        for (const module of MODULES) {
+            const path = typeof module === 'string' ? module : module?.path;
+            const enabled = typeof module === 'string' || module?.enabled;
+
+            if (enabled) {
+                this.arguments.registerPath(
+                    join(__dirname, 'modules', path, 'arguments')
+                );
+                this.commands.registerPath(
+                    join(__dirname, 'modules', path, 'commands')
+                );
+                this.events.registerPath(
+                    join(__dirname, 'modules', path, 'events')
+                );
+            }
         }
     }
 }

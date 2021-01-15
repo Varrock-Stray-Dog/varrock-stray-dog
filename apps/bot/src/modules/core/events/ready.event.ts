@@ -1,12 +1,13 @@
-import { PieceContext, Event } from '@sapphire/framework';
-import { woofify } from '../../../lib/util';
+import { ApplyOptions } from '@sapphire/decorators';
+import { Event, EventOptions } from '@sapphire/framework';
+import { StrayDogLogger } from 'apps/bot/src';
+import { woofify } from '@varrock-stray-dog/bot';
 
+@ApplyOptions<EventOptions>({
+    event: 'ready',
+})
 export class ReadyEvent extends Event {
-    constructor(context: PieceContext) {
-        super(context, {
-            event: 'ready',
-        });
-    }
+    public logger: StrayDogLogger = new StrayDogLogger('Ready Event');
 
     async run() {
         const guildIds = this.context.client.guilds.cache.map(
@@ -16,15 +17,18 @@ export class ReadyEvent extends Event {
             'Settings/findOrCreateMultiple',
             guildIds
         );
-        this.context.client.logger.info(
-            `[Ready] Checked ${guildIds.length} guilds.`
-        );
 
         this.context.client.user.setActivity(`${process.env.BOT_PREFIX} 🐶`, {
             type: 'LISTENING',
         });
-        this.context.client.logger.info(
-            `[Ready] ${woofify('Stray Dog is ready.', false)}`
+        this.logger.info(`┬ ${woofify('Stray Dog is ready.', false)}`);
+        this.logger.info(`├ Loaded ${this.context.client.events.size} events`);
+        this.logger.info(
+            `├ Loaded ${this.context.client.arguments.size} arguments`
         );
+        this.logger.info(
+            `├ Loaded ${this.context.client.commands.size} commands`
+        );
+        this.logger.info(`└ Checked ${guildIds.length} guild settings.`);
     }
 }

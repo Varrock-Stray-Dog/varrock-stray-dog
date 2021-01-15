@@ -34,7 +34,7 @@ export class CacheManager {
     public async getGuildPrefix(id: string) {
         const prefix = await this.get(id, CacheKey.GuildPrefix);
         if (prefix !== null) {
-            return prefix;
+            return [prefix, OPTIONAL_DEFAULT];
         }
 
         const {
@@ -42,9 +42,6 @@ export class CacheManager {
         }: Settings = await this.client.nestjs.send('Settings/findOne', id);
 
         await this.set(id, settingsPrefix, CacheKey.GuildPrefix);
-
-        console.log(settingsPrefix);
-
         return [settingsPrefix, OPTIONAL_DEFAULT];
     }
 
