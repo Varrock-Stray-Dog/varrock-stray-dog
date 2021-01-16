@@ -2,7 +2,7 @@ import { Controller, Logger } from '@nestjs/common';
 
 import { SettingsService } from './settings.service';
 import { MessagePattern } from '@nestjs/microservices';
-import { SettingsModel } from './settings.model';
+import { SettingsModel } from '@varrock-stray-dog/models';
 
 @Controller('settings')
 export class SettingsController {

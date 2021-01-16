@@ -29,8 +29,10 @@ FROM base as production-base
 # API
 FROM build-base as build-api
 	RUN yarn nx build api
+	RUN yarn prisma:generate
 
 FROM production-base as production-api
+	COPY --from=build-api /opt/app/prisma prisma
 	COPY --from=build-api /opt/app/dist/api dist
 
 # BOT

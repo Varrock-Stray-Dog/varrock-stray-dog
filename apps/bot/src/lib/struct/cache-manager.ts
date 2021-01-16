@@ -1,7 +1,7 @@
-import { Settings } from '@prisma/client';
 import { StrayDogClient } from '../client';
 import { OPTIONAL_DEFAULT } from '../constants';
 import { CacheKey } from '../types/enums';
+import { SettingsModel } from '@varrock-stray-dog/models';
 
 /*
  * @copyright Aditya N. Tripathi https://github.com/AdityaTD
@@ -39,7 +39,10 @@ export class CacheManager {
 
         const {
             prefix: settingsPrefix,
-        }: Settings = await this.client.nestjs.send('Settings/findOne', id);
+        }: SettingsModel = await this.client.nestjs.send(
+            'Settings/findOne',
+            id
+        );
 
         await this.set(id, settingsPrefix, CacheKey.GuildPrefix);
         return [settingsPrefix, OPTIONAL_DEFAULT];
@@ -51,7 +54,7 @@ export class CacheManager {
             return lang;
         }
 
-        const { language }: Settings = await this.client.nestjs.send(
+        const { language }: SettingsModel = await this.client.nestjs.send(
             'Settings/findOne',
             id
         );

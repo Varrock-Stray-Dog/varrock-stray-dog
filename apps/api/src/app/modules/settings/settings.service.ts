@@ -1,40 +1,37 @@
 import { Injectable } from '@nestjs/common';
-
+import { Settings } from '@prisma/client';
+import { SettingsModel } from '@varrock-stray-dog/models';
 import { PrismaClient } from '../prisma/prisma.client';
 
 @Injectable()
 export class SettingsService {
     constructor(private _prisma: PrismaClient) {}
 
-    public byGuildId(guildId: string) {
-        return this._prisma.settings.findOne({
-            where: {
-                guildId,
-            },
-        });
-    }
-
     async findOneByGuildId(guildId: string) {
-        return this._prisma.settings.findOne({
+        const settings = await this._prisma.settings.findOne({
             where: {
                 guildId,
             },
         });
+
+        return this._parseSettings(settings);
     }
 
-    async findOrCreate(guildId: string) {
-        const guild = await this.findOneByGuildId(guildId);
+    async findOrCreate(guildId: string): Promise<SettingsModel> {
+        const settings: SettingsModel = await this.findOneByGuildId(guildId);
 
-        if (!guild) {
-            return this._prisma.settings.create({
-                data: {
-                    guildId,
-                    prefix: process.env.BOT_PREFIX,
-                },
-            });
+        if (settings) {
+            return settings;
         }
 
-        return guild;
+        // if none exists, we create one.
+        const created = await this._prisma.settings.create({
+            data: {
+                guildId,
+                prefix: process.env.BOT_PREFIX,
+            },
+        });
+        return this._parseSettings(created);
     }
 
     public async getPrefix(guildId: string) {
@@ -60,5 +57,26 @@ export class SettingsService {
                 guildId,
             },
         });
+    }
+
+    private _parseSettings(obj: any): SettingsModel {
+        const keys = Object.keys(obj);
+        const newObj = {};
+
+        for (const key of keys) {
+            if (key.indexOf('_') === -1) {
+                newObj[key] = obj[key];
+                continue;
+            }
+
+            const splitted = key.split('_');
+            const first = splitted.shift();
+            newObj[first] = this._parseSettings({
+                ...(newObj[first] ?? {}),
+                [splitted.join('_')]: obj[key],
+            });
+        }
+
+        return newObj;
     }
 }

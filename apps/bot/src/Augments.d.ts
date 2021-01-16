@@ -12,6 +12,7 @@ import {
     MessageOptions,
     SplitOptions,
 } from 'discord.js';
+import { SettingsModel } from '@varrock-stray-dog/models';
 
 declare module 'discord.js' {
     interface Client {
@@ -23,7 +24,7 @@ declare module 'discord.js' {
     }
 
     interface Guild {
-        databaseInstance(): Guild;
+        settings(): Promise<SettingsModel>;
     }
 
     interface Message {

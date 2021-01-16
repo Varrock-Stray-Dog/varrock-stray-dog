@@ -1,0 +1,23 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "UpdateField",
+      "model": "Settings",
+      "field": "loot_moderatorRole",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Settings",
+          "field": "loot_moderatorRole"
+        },
+        "directive": "default"
+      }
+    }
+  ]
+}

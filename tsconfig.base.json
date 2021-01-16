@@ -17,6 +17,7 @@
         "baseUrl": ".",
         "paths": {
             "@varrock-stray-dog/constants": ["libs/constants/src/index.ts"],
+            "@varrock-stray-dog/models": ["libs/models/src/index.ts"],
             "@varrock-stray-dog/bot": ["apps/bot/src/index.ts"],
             "@varrock-stray-dog/api": ["apps/api/src/index.ts"],
             "@varrock-stray-dog/web": ["apps/web/src/index.ts"]

@@ -2,7 +2,7 @@ import { Logger, NotFoundException } from '@nestjs/common';
 import { Args, Query, Resolver } from '@nestjs/graphql';
 
 import { SettingsService } from './settings.service';
-import { SettingsModel } from './settings.model';
+import { SettingsModel } from '@varrock-stray-dog/models';
 
 @Resolver(() => SettingsModel)
 export class SettingsResolver {
@@ -10,11 +10,11 @@ export class SettingsResolver {
     public constructor(private readonly _service: SettingsService) {}
 
     @Query(() => SettingsModel)
-    async guild(@Args('guildId') guildId: string): Promise<SettingsModel> {
+    async settings(@Args('guildId') guildId: string): Promise<SettingsModel> {
         const settings = await this._service.findOneByGuildId(guildId);
         if (!settings) {
             throw new NotFoundException(guildId);
         }
-        return settings;
+        return settings as any;
     }
 }

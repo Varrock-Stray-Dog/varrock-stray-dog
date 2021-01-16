@@ -1,7 +1,7 @@
 // This is your Prisma schema file,
 datasource db {
 	provider	= "postgresql"
-	url			= env("POSTGRES_URL")
+	url = "***"
 }
 
 generator client {
@@ -15,7 +15,7 @@ model Settings {
 	language						String		@default("en-US")
 	pets_enabled					Boolean		@default(true)
 	loot_enabled					Boolean		@default(true)
-	loot_moderatorRole				String?
+	loot_moderatorRole				Boolean		@default(true)
 	loot_requireVerification		Boolean		@default(true)
 
 	createdAt 						DateTime	@default(now())

@@ -65,8 +65,7 @@ export class StrayDogClient extends SapphireClient {
 
     private _registerPieces() {
         for (const module of MODULES) {
-            const path = typeof module === 'string' ? module : module?.path;
-            const enabled = typeof module === 'string' || module?.enabled;
+            const { path, enabled } = module;
 
             if (enabled) {
                 this.arguments.registerPath(

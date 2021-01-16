@@ -1,6 +1,11 @@
-import { Command, CommandOptions, PieceContext } from '@sapphire/framework';
+import {
+    Args,
+    Command,
+    CommandOptions,
+    PieceContext,
+} from '@sapphire/framework';
 
-export abstract class StrayDogCommand extends Command {
+export abstract class StrayDogCommand<T = Args> extends Command<T> {
     public constructor(context: PieceContext, options: CommandOptions) {
         // @ts-ignore i cbb typing this
         options.preconditions = Array.isArray(options.preconditions)
