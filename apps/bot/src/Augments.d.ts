@@ -2,9 +2,9 @@ import { Redis as IRedis } from 'ioredis';
 import { StrayDogLogger, CacheManager, NestjsHandler } from './libs/struct';
 import { Guild } from '@prisma/client';
 import {
-    IPromptMessage,
-    IPromptMessageOptions,
-    IPromptExplicitReturn,
+    IMessagePrompterMessage,
+    IMessagePrompterOptions,
+    IMessagePrompterExplicitReturn,
 } from '@sapphire/discord.js-utilities';
 import {
     MessageOptions,
@@ -29,9 +29,9 @@ declare module 'discord.js' {
 
     interface Message {
         replyPrompt(
-            message: IPromptMessage,
-            options?: IPromptMessageOptions
-        ): IPromptExplicitReturn | boolean;
+            message: IMessagePrompterMessage,
+            options?: IMessagePrompterOptions
+        ): Promise<IMessagePrompterExplicitReturn | boolean>;
 
         woofSend(
             content,
@@ -66,25 +66,25 @@ declare module 'discord.js' {
 
     interface TextChannel {
         prompt(
-            message: IPromptMessageOptions,
+            message: IMessagePrompterMessage,
             author: User,
-            options?: IPromptMessageOptions
-        ): IPromptExplicitReturn | boolean;
+            options?: IMessagePrompterOptions
+        ): Promise<IMessagePrompterExplicitReturn | boolean>;
     }
 
     interface DMChannel {
         prompt(
-            message: IPromptMessageOptions,
+            message: IMessagePrompterMessage,
             author: User,
-            options?: IPromptMessageOptions
-        ): IPromptExplicitReturn | boolean;
+            options?: IMessagePrompterOptions
+        ): Promise<IMessagePrompterExplicitReturn | boolean>;
     }
 
     interface NewsChannel {
         prompt(
-            message: IPromptMessageOptions,
+            message: IMessagePrompterMessage,
             author: User,
-            options?: IPromptMessageOptions
-        ): IPromptExplicitReturn | boolean;
+            options?: IMessagePrompterOptions
+        ): Promise<IMessagePrompterExplicitReturn | boolean>;
     }
 }

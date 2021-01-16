@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "ng": "nx",
-        "prestart": "yarn",
+        "prestart": "yarn && rm -rf dist",
         "nx": "nx",
         "add:ng": "yarn add",
         "postadd:ng": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
