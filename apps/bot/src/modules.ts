@@ -3,9 +3,7 @@ export interface IModule {
     path: string;
 }
 
-export type TModule = IModule | string;
-
-export const MODULES: TModule[] = [
+export const MODULES: IModule[] = [
     {
         enabled: true,
         path: 'core',

@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Settings } from '@prisma/client';
 import { SettingsModel } from '@varrock-stray-dog/models';
 import { PrismaClient } from '../prisma/prisma.client';
 
@@ -60,6 +59,10 @@ export class SettingsService {
     }
 
     private _parseSettings(obj: any): SettingsModel {
+        if (!obj) {
+            return obj;
+        }
+
         const keys = Object.keys(obj);
         const newObj = {};
 
@@ -77,6 +80,6 @@ export class SettingsService {
             });
         }
 
-        return newObj;
+        return newObj as any;
     }
 }

@@ -3,6 +3,6 @@ export const environment = {
     token: process.env.BOT_TOKEN,
     id: 'STRAY_DOG',
     redis: {
-        host: 'redis',
+        host: process.env.REDIS_HOST,
     },
 };

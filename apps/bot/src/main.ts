@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { environment } from './environments/environment.prod';
+import { environment } from './environments/environment';
 import { StrayDogClient, clientErrorWrapper } from '.';
 
 import { inspect } from 'util';

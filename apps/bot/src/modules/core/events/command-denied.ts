@@ -3,7 +3,6 @@ import {
     Event,
     Events,
     EventOptions,
-    UserError,
     CommandDeniedPayload,
 } from '@sapphire/framework';
 import { StrayDogLogger } from 'apps/bot/src';
@@ -13,7 +12,7 @@ import { woofify } from '@varrock-stray-dog/bot';
     event: Events.CommandDenied,
 })
 export class CommandDeniedEvent extends Event {
-    public logger: StrayDogLogger = new StrayDogLogger('Command Error Event');
+    public logger: StrayDogLogger = new StrayDogLogger('Command Denied Event');
 
     run(error: any, { message, command: { name } }: CommandDeniedPayload) {
         if (error?.identifier === 'ApiOnline') {
