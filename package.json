@@ -58,6 +58,7 @@
         "graphql-tools": "^7.0.2",
         "ioredis": "^4.17.3",
         "nx": "^10.0.13",
+        "pretty-ms": "^7.0.1",
         "redis": "^3.0.2",
         "reflect-metadata": "^0.1.13",
         "rxjs": "~6.5.5",
