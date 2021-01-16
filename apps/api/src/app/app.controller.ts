@@ -1,12 +1,14 @@
-import { Controller, Get, HttpService } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { uptime } from 'process';
 import * as prettyMilliseconds from 'pretty-ms';
 import { hostname } from 'os';
+import { MessagePattern } from '@nestjs/microservices';
 
 @Controller('')
 export class AppController {
     @Get('/')
-    get() {
+    @MessagePattern({ cmd: 'ping' })
+    ping() {
         const uptimeMs = uptime() * 1000;
 
         return {

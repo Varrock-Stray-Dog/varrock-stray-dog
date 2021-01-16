@@ -1,13 +1,13 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { Command, CommandOptions, Args } from '@sapphire/framework';
-import { woofify } from '@varrock-stray-dog/bot';
+import { CommandOptions, Args } from '@sapphire/framework';
+import { woofify, StrayDogCommand } from '@varrock-stray-dog/bot';
 import { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
     name: 'prompt',
     description: 'Sends the message as a prompt',
 })
-export default class extends Command {
+export default class extends StrayDogCommand {
     public async run(message: Message, args: Args) {
         const msg = await args.pickResult('string');
         if (!msg.success) {

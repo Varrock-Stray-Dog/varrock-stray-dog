@@ -27,6 +27,9 @@ export class ReadyEvent extends Event {
             `├ Loaded ${this.context.client.arguments.size} arguments`
         );
         this.logger.info(
+            `├ Loaded ${this.context.client.preconditions.size} preconditions`
+        );
+        this.logger.info(
             `├ Loaded ${this.context.client.commands.size} commands`
         );
         this.logger.info(`└ Checked ${guildIds.length} guild settings.`);

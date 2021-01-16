@@ -19,6 +19,8 @@ export class StrayDogClient extends SapphireClient {
     public logger: StrayDogLogger = new StrayDogLogger('Stray Dog Client');
     public nestjs: NestjsHandler;
 
+    private _apiRetries = 10;
+
     public constructor(environment?: any) {
         super({
             id: environment.id,
@@ -42,6 +44,25 @@ export class StrayDogClient extends SapphireClient {
         this._registerPieces();
     }
 
+    async checkApi(count = 1) {
+        this.logger.info('Connecting to api');
+        return this.nestjs.send('ping', null, 2000).catch((e) => {
+            if (e === 'Timeout') {
+                if (count >= this._apiRetries) {
+                    this.logger.error(
+                        'Could not connect to api, stopping process.'
+                    );
+                    process.exit(1);
+                }
+
+                this.logger.warn('Api timeout occured, retrying.');
+                return this.checkApi(count + 1);
+            }
+
+            throw new Error(e);
+        });
+    }
+
     private _registerPieces() {
         for (const module of MODULES) {
             const path = typeof module === 'string' ? module : module?.path;
@@ -56,6 +77,9 @@ export class StrayDogClient extends SapphireClient {
                 );
                 this.events.registerPath(
                     join(__dirname, 'modules', path, 'events')
+                );
+                this.preconditions.registerPath(
+                    join(__dirname, 'modules', path, 'preconditions')
                 );
             }
         }

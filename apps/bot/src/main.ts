@@ -24,10 +24,10 @@ inspect.defaultOptions.depth = 1;
 //         ]
 //     });
 // }
-
 const client = new StrayDogClient(environment);
 
 const main = async () => {
+    await client.checkApi();
     await client.login(environment.token);
 };
 

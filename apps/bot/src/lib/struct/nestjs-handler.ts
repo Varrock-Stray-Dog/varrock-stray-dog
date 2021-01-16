@@ -15,9 +15,9 @@ export class NestjsHandler {
         this._config = config;
     }
 
-    send(pattern: any, data = null): any {
+    send(pattern: any, data = null, timeout = this._timeout): any {
         const payload = this._createPayload({ cmd: pattern }, data);
-        return this._request(payload);
+        return this._request(payload, timeout);
     }
 
     private _createPayload(pattern, data): NestjsPayload {
@@ -28,7 +28,7 @@ export class NestjsHandler {
         };
     }
 
-    private async _request(payload: NestjsPayload) {
+    private async _request(payload: NestjsPayload, timeout = this._timeout) {
         let isFinished = false;
         const promise = new Promise((resolve, reject) => {
             const sub = new Redis(this._config);
@@ -50,7 +50,7 @@ export class NestjsHandler {
                         sub.disconnect();
                         return reject('Timeout');
                     }
-                }, this._timeout);
+                }, timeout);
             });
 
             const responses = [];
