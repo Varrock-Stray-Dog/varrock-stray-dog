@@ -19,6 +19,8 @@ export class StrayDogClient extends SapphireClient {
     public logger: StrayDogLogger = new StrayDogLogger('Stray Dog Client');
     public nestjs: NestjsHandler;
 
+    public ownerId: string | undefined = undefined;
+
     private _apiRetries = 10;
 
     public constructor(environment?: any) {
@@ -27,6 +29,15 @@ export class StrayDogClient extends SapphireClient {
             shards: [0],
             i18n: {
                 defaultLanguageDirectory: join(__dirname, 'languages'),
+            },
+            ws: {
+                intents: [
+                    'GUILD_MEMBERS',
+                    'GUILD_MESSAGES',
+                    'GUILDS',
+                    'DIRECT_MESSAGES',
+                    'GUILD_MESSAGE_REACTIONS',
+                ],
             },
         });
 

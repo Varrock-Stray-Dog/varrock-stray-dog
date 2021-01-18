@@ -43,5 +43,5 @@ export class SettingsModel implements Partial<Settings> {
     createdAt: Date;
 
     @Field({ nullable: true })
-    updatedAt?: Date;
+    updatedAt: Date;
 }

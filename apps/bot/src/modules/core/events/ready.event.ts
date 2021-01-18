@@ -10,6 +10,11 @@ export class ReadyEvent extends Event {
     public logger: StrayDogLogger = new StrayDogLogger('Ready Event');
 
     async run() {
+        if (this.context.client.ownerId === undefined) {
+            const application = await this.context.client.fetchApplication();
+            this.context.client.ownerId = application.owner?.id;
+        }
+
         const guildIds = this.context.client.guilds.cache.map(
             (guild) => guild.id
         );
@@ -18,10 +23,15 @@ export class ReadyEvent extends Event {
             guildIds
         );
 
-        this.context.client.user.setActivity(`${process.env.BOT_PREFIX} 🐶`, {
-            type: 'LISTENING',
-        });
+        this.context.client.user.setActivity(
+            `${process.env.BOT_PREFIX}help 🐶`,
+            {
+                type: 'LISTENING',
+            }
+        );
+
         this.logger.info(`┬ ${woofify('Stray Dog is ready.', false)}`);
+        this.logger.info(`├ OwnerID: ${this.context.client.ownerId}`);
         this.logger.info(`├ Loaded ${this.context.client.events.size} events`);
         this.logger.info(
             `├ Loaded ${this.context.client.arguments.size} arguments`

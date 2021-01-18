@@ -10,16 +10,24 @@ import {
     MessagePrompter,
     IMessagePrompterMessage,
     IMessagePrompterOptions,
+    IMessagePrompterOptionsType,
 } from '@sapphire/discord.js-utilities';
 
 export class StrayDogMessage extends Structures.get('Message')
     implements Message {
-    replyPrompt(
+    prompt(
         message: IMessagePrompterMessage,
-        options?: IMessagePrompterOptions
+        options?: Partial<IMessagePrompterOptions> | IMessagePrompterOptionsType
     ) {
         const handler = new MessagePrompter(message, options);
         return handler.run(this.channel, this.author);
+    }
+
+    woofReply(
+        content,
+        options?: MessageOptions & { split: true | SplitOptions }
+    ) {
+        this.reply(woofify(content), options);
     }
 
     woofSend(

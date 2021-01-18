@@ -1,4 +1,4 @@
-export interface PET {
+export interface IPetMetaData {
     name: string;
     category: string;
     aliases: string[];
@@ -6,7 +6,7 @@ export interface PET {
     emoji: string[];
 }
 
-export const PETS: PET[] = [
+export const PETS: IPetMetaData[] = [
     {
         name: 'Pet chaos elemental',
         category: 'boss',
@@ -269,7 +269,7 @@ export const PETS: PET[] = [
     {
         name: 'Jal-nib-rek',
         category: 'boss',
-        aliases: ['nibler', 'inferno'],
+        aliases: ['nibler', 'inferno', 'zuk'],
         asset: 'Jal-nib-rek.png',
         emoji: ['Jalnibrek', '749362398003068940'],
     },

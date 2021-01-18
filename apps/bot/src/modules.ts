@@ -9,6 +9,10 @@ export const MODULES: IModule[] = [
         path: 'core',
     },
     {
+        enabled: true,
+        path: 'pets',
+    },
+    {
         enabled: process.env.NODE_ENV === 'development',
         path: 'development',
     },

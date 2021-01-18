@@ -4,6 +4,7 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 
 import { SettingsModule } from './modules/settings/settings.module';
+import { PetsModule } from './modules/pets/pets.module';
 
 @Module({
     imports: [
@@ -16,6 +17,7 @@ import { SettingsModule } from './modules/settings/settings.module';
 
         // modules
         SettingsModule,
+        PetsModule,
     ],
     controllers: [AppController],
 })

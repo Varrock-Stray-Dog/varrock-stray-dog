@@ -5,19 +5,44 @@ import {
     IMessagePrompterMessage,
     IMessagePrompterOptions,
     IMessagePrompterExplicitReturn,
+    IMessagePrompterOptionsType,
+    IMessagePrompterReturn,
 } from '@sapphire/discord.js-utilities';
 import {
     MessageOptions,
     MessageAdditions,
     MessageOptions,
     SplitOptions,
+    StringResolvable,
 } from 'discord.js';
 import { SettingsModel } from '@varrock-stray-dog/models';
 
+interface ChannelExtendables {
+    readonly attachable: boolean;
+    readonly embedable: boolean;
+    readonly postable: boolean;
+    readonly readable: boolean;
+
+    woofSend(
+        content: StringResolvable,
+        options?:
+            | MessageOptions
+            | (MessageOptions & { split?: false })
+            | MessageAdditions
+    );
+
+    prompt(
+        message: IMessagePrompterMessage,
+        author: User,
+        options?: Partial<IMessagePrompterOptions> | IMessagePrompterOptionsType
+    ): Promise<IMessagePrompterReturn>;
+}
 declare module 'discord.js' {
     interface Client {
         readonly cache: CacheManager;
         readonly redis: IRedis;
+
+        ownerId: string | undefined;
 
         logger: StrayDogLogger;
         nestjs: NestjsHandler;
@@ -28,10 +53,17 @@ declare module 'discord.js' {
     }
 
     interface Message {
-        replyPrompt(
+        prompt(
             message: IMessagePrompterMessage,
-            options?: IMessagePrompterOptions
-        ): Promise<IMessagePrompterExplicitReturn | boolean>;
+            options?:
+                | Partial<IMessagePrompterOptions>
+                | IMessagePrompterOptionsType
+        ): Promise<IMessagePrompterReturn>;
+
+        woofReply(
+            content,
+            options?: MessageOptions & { split: true | SplitOptions }
+        );
 
         woofSend(
             content,
@@ -64,27 +96,9 @@ declare module 'discord.js' {
         ): Promise<Message | Message[]>;
     }
 
-    interface TextChannel {
-        prompt(
-            message: IMessagePrompterMessage,
-            author: User,
-            options?: IMessagePrompterOptions
-        ): Promise<IMessagePrompterExplicitReturn | boolean>;
-    }
+    interface TextChannel extends ChannelExtendables {}
 
-    interface DMChannel {
-        prompt(
-            message: IMessagePrompterMessage,
-            author: User,
-            options?: IMessagePrompterOptions
-        ): Promise<IMessagePrompterExplicitReturn | boolean>;
-    }
+    interface DMChannel extends ChannelExtendables {}
 
-    interface NewsChannel {
-        prompt(
-            message: IMessagePrompterMessage,
-            author: User,
-            options?: IMessagePrompterOptions
-        ): Promise<IMessagePrompterExplicitReturn | boolean>;
-    }
+    interface NewsChannel extends ChannelExtendables {}
 }
