@@ -60,10 +60,10 @@ export default class extends StrayDogPetsCommand {
 
         let kc = parseInt(args.getOption('kills', 'kc', 'k'));
         if (!kc) {
-            const prompt = await message.prompt(
+            const prompt = (await message.prompt(
                 `At what kc did you receive ${emoji} ${petMetaData.name}?`,
                 'message'
-            );
+            )) as Message;
 
             kc = parseInt(prompt.content);
         }
@@ -74,10 +74,10 @@ export default class extends StrayDogPetsCommand {
 
         let date = args.getOption('date', 'd');
         if (!date) {
-            const prompt = await message.prompt(
+            const prompt = (await message.prompt(
                 `What was the date that you received ${emoji} ${petMetaData.name}?`,
                 'message'
-            );
+            )) as Message;
 
             date = prompt.content;
         }
