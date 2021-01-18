@@ -94,7 +94,14 @@
                         "polyfills": "apps/web/src/polyfills.ts",
                         "tsConfig": "apps/web/tsconfig.app.json",
                         "aot": true,
-                        "assets": ["apps/web/src/assets"],
+                        "assets": [
+                            "apps/web/src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "assets/",
+                                "output": "./assets/"
+                            }
+                        ],
                         "styles": ["apps/web/src/styles.scss"],
                         "scripts": []
                     },
