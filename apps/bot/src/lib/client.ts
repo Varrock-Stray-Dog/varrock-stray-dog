@@ -19,7 +19,7 @@ export class StrayDogClient extends SapphireClient {
     public logger: StrayDogLogger = new StrayDogLogger('Stray Dog Client');
     public nestjs: NestjsHandler;
 
-    public ownerId: string | undefined = undefined;
+    public ownerId: string | undefined = process.env.OWNER_ID;
 
     private _apiRetries = 10;
 
