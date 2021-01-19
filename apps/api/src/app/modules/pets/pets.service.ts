@@ -18,10 +18,15 @@ export class PetsService {
         return (results?.[0]?.item as IPetMetaData) ?? null;
     }
 
-    async findOneByUserAndName(userId: string, name: string): Promise<Pet> {
+    async findByName(
+        userId: string,
+        guildId: string,
+        name: string
+    ): Promise<Pet> {
         const result = await this._prisma.pet.findMany({
             where: {
                 userId,
+                guildId,
                 name,
             },
             take: 1,
@@ -30,9 +35,26 @@ export class PetsService {
         return result?.[0];
     }
 
+    findMany(userId: string, guildId: string): Promise<Pet[]> {
+        return this._prisma.pet.findMany({
+            where: {
+                userId,
+                guildId,
+            },
+        });
+    }
+
     add(pet: Pet): Promise<Pet> {
         return this._prisma.pet.create({
             data: pet,
+        });
+    }
+
+    delete(id: string): Promise<Pet> {
+        return this._prisma.pet.delete({
+            where: {
+                id,
+            },
         });
     }
 }

@@ -5,6 +5,9 @@ import { Settings } from '@prisma/client';
 export class PetSettingsModel {
     @Field()
     enabled: boolean;
+
+    @Field({ nullable: true })
+    moderatorRole?: string;
 }
 
 @ObjectType()

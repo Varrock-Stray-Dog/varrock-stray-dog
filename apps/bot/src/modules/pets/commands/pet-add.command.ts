@@ -12,6 +12,7 @@ import {
     getDate,
     format,
 } from 'date-fns';
+import { canEditPet } from '../util/can-edit-pet';
 
 @ApplyOptions<CommandOptions>({
     name: 'pet-add',
@@ -22,6 +23,7 @@ import {
 })
 export default class extends StrayDogPetsCommand {
     public async run(message: Message, args: Args) {
+        const { user, isSomeoneElse } = await canEditPet(message, args);
         const name = await args.restResult('string');
 
         if (!name.success) {
@@ -46,38 +48,64 @@ export default class extends StrayDogPetsCommand {
         );
 
         const hasPet: PetModel = await this.context.client.nestjs.send(
-            'Pet/findOneByUserAndName',
-            { userId: message.author.id, name: petMetaData?.name }
+            'Pet/findByName',
+            {
+                userId: user.id,
+                guildId: message.guild.id,
+                name: petMetaData?.name,
+            }
         );
 
         if (hasPet) {
             return message.channel.woofSend(
-                `You already have ${emoji} ${hasPet.name} registered at ${
-                    hasPet.kc
-                }kc on ${format(parseISO(hasPet.date as any), 'LLL. co, yyyy')}`
+                `${isSomeoneElse ? 'He/She' : 'You'} already ${
+                    isSomeoneElse ? 'has' : 'have'
+                } ${emoji} ${hasPet.name} registered at ${hasPet.kc}${
+                    petMetaData.category === 'skilling' ? 'xp' : 'kc'
+                } on ${format(parseISO(hasPet.date as any), 'LLL. co, yyyy')}`
             );
         }
 
         let kc = parseInt(args.getOption('kills', 'kc', 'k'));
         if (!kc) {
             const prompt = (await message.prompt(
-                `At what kc did you receive ${emoji} ${petMetaData.name}?`,
+                `At what ${
+                    petMetaData.category === 'skilling' ? 'amount of xp' : 'kc'
+                } did ${isSomeoneElse ? 'he/she' : 'you'} receive ${emoji} ${
+                    petMetaData.name
+                }?`,
                 'message'
             )) as Message;
+
+            if (prompt.content.toLowerCase() === 'cancel') {
+                return message.channel.woofSend(
+                    'Okay, cancelled your request.'
+                );
+            }
 
             kc = parseInt(prompt.content);
         }
 
-        if (isNaN(kc)) {
-            return message.channel.woofSend(`Kc must be a number`);
+        if (isNaN(kc) || kc === 0) {
+            return message.channel.woofSend(
+                `Kc must be a number and can't be 0.`
+            );
         }
 
         let date = args.getOption('date', 'd');
         if (!date) {
             const prompt = (await message.prompt(
-                `What was the date that you received ${emoji} ${petMetaData.name}?`,
+                `What was the date that ${
+                    isSomeoneElse ? 'he/she' : 'you'
+                } received ${emoji} ${petMetaData.name}?`,
                 'message'
             )) as Message;
+
+            if (prompt.content.toLowerCase() === 'cancel') {
+                return message.channel.woofSend(
+                    'Okay, cancelled your request.'
+                );
+            }
 
             date = prompt.content;
         }
@@ -97,7 +125,7 @@ export default class extends StrayDogPetsCommand {
         }
 
         const createObj = {
-            userId: message.author.id,
+            userId: user.id,
             guildId: message.guild.id,
             kc,
             date: parsedDate,
@@ -109,8 +137,8 @@ export default class extends StrayDogPetsCommand {
             createObj
         );
 
-        return message.channel.send(
-            `\`\`\`${JSON.stringify(pet, null, 4)}\`\`\``
+        return message.channel.woofSend(
+            `I have saved ${emoji} ${petMetaData.name} to your collection! :tada:`
         );
     }
 }

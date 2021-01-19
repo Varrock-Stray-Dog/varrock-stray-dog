@@ -1,6 +1,4 @@
 import { SapphireClient } from '@sapphire/framework';
-import { I18nContext } from '@sapphire/plugin-i18next';
-import { Message } from 'discord.js';
 import { join } from 'path';
 import Redis, { Redis as IRedis } from 'ioredis';
 
@@ -8,12 +6,13 @@ import './extensions';
 import './plugins';
 
 // custom
-import { StrayDogLogger, CacheManager } from './struct';
+import { StrayDogLogger } from './struct';
 import { NestjsHandler } from './struct/nestjs-handler';
 import { MODULES } from '../modules';
+import { fetchLanguage } from './util/fetch-language';
+import { fetchPrefix } from './util/fetch-prefix';
 
 export class StrayDogClient extends SapphireClient {
-    public readonly cache: CacheManager;
     public readonly redis: IRedis;
 
     public logger: StrayDogLogger = new StrayDogLogger('Stray Dog Client');
@@ -42,15 +41,10 @@ export class StrayDogClient extends SapphireClient {
         });
 
         this.redis = new Redis(environment.redis);
-        this.cache = new CacheManager(this);
         this.nestjs = new NestjsHandler(environment.redis);
 
-        this.fetchPrefix = (message: Message) =>
-            message.guild
-                ? this.cache.getGuildPrefix(message.guild.id)
-                : process.env.BOT_PREFIX;
-        this.fetchLanguage = async (context: I18nContext) =>
-            context.guild ? this.cache.getLanguage(context.guild.id) : 'en-US';
+        this.fetchPrefix = fetchPrefix;
+        this.fetchLanguage = fetchLanguage;
 
         this._registerPieces();
     }

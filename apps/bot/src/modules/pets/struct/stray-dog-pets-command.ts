@@ -4,8 +4,8 @@ import { StrayDogCommand } from 'apps/bot/src/lib';
 export abstract class StrayDogPetsCommand<T = Args> extends StrayDogCommand<T> {
     public constructor(context: PieceContext, options: CommandOptions) {
         options.preconditions = Array.isArray(options.preconditions)
-            ? ['PetsEnabled', ...options.preconditions]
-            : ['PetsEnabled'];
+            ? ['PetsEnabled', 'GuildOnly', ...options.preconditions]
+            : ['PetsEnabled', 'GuildOnly'];
         super(context, options);
     }
 }

@@ -336,4 +336,11 @@ export const PETS: IPetMetaData[] = [
         asset: 'Little_nightmare.png',
         emoji: ['Little_nightmare', '749362397960994828'],
     },
+    {
+        name: "Lil' creator/Lil' Destructor",
+        category: 'minigame',
+        aliases: ['soul wars', 'destructor', 'creator'],
+        asset: "Lil'_creator.png",
+        emoji: ['Lil_creator', '801171183000748052'],
+    },
 ];

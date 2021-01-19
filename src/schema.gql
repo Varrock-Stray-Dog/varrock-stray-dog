@@ -15,6 +15,7 @@ type LootSettingsModel {
 
 type PetSettingsModel {
   enabled: Boolean!
+  moderatorRole: String
 }
 
 type Query {

@@ -8,3 +8,5 @@
 20210106230718-add-settings-language
 20210116151122-dates-and-settings
 20210116152822-make-moderator-role-optional
+20210119162849-remove-guildid-from-pets
+20210119164047-add-settings-pets-moderator-role
