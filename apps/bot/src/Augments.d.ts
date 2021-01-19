@@ -50,6 +50,8 @@ declare module 'discord.js' {
 
         logger: StrayDogLogger;
         nestjs: NestjsHandler;
+
+        invite: string;
     }
 
     interface Guild {

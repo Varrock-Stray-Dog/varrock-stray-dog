@@ -22,6 +22,12 @@ export class StrayDogClient extends SapphireClient {
 
     private _apiRetries = 10;
 
+    get invite() {
+        return `https://discord.com/oauth2/authorize?client_id=${
+            this.user!.id
+        }&scope=bot&permissions=1544023104`;
+    }
+
     public constructor(environment?: any) {
         super({
             id: environment.id,
