@@ -8,13 +8,6 @@ import { MessageEmbed } from 'discord.js';
 import { woofify } from 'apps/bot/src/lib';
 import { format, parseISO } from 'date-fns';
 
-function chunkArray(array, chunkSize) {
-    var R = [];
-    for (var i = 0; i < array.length; i += chunkSize)
-        R.push(array.slice(i, i + chunkSize));
-    return R;
-}
-
 @ApplyOptions<CommandOptions>({
     name: 'pet-view',
     description: 'View your collection of pets',
@@ -95,7 +88,7 @@ export default class extends StrayDogPetsCommand {
             );
 
             if (unobtained?.length) {
-                const chunked = chunkArray(unobtained, 16);
+                const chunked = unobtained.chunk(16);
 
                 while (chunked.length % 3 !== 0) {
                     chunked.push([]);
@@ -127,7 +120,7 @@ export default class extends StrayDogPetsCommand {
 
         return message.channel
             .send({
-                content: woofify(null, false),
+                content: woofify('', false),
                 embed,
             })
             .catch((err) => console.log(err));

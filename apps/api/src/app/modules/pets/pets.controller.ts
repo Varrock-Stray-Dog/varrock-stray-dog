@@ -47,4 +47,10 @@ export class PetsController {
         this._logger.log('delete');
         return this._service.delete(id);
     }
+
+    @MessagePattern({ cmd: 'Pet/top' })
+    top(guildId: string): Promise<any> {
+        this._logger.log('delete');
+        return this._service.top(guildId);
+    }
 }

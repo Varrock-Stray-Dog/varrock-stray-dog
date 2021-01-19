@@ -25,10 +25,7 @@ interface ChannelExtendables {
 
     woofSend(
         content: StringResolvable,
-        options?:
-            | MessageOptions
-            | (MessageOptions & { split?: false })
-            | MessageAdditions
+        options?: (MessageOptions & { split?: false }) | MessageAdditions
     );
 
     prompt(
@@ -37,6 +34,13 @@ interface ChannelExtendables {
         options?: Partial<IMessagePrompterOptions> | IMessagePrompterOptionsType
     ): Promise<IMessagePrompterReturn>;
 }
+
+declare global {
+    interface Array<T> {
+        chunk(chunkSize: number): T[][];
+    }
+}
+
 declare module 'discord.js' {
     interface Client {
         readonly cache: CacheManager;

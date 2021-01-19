@@ -57,4 +57,19 @@ export class PetsService {
             },
         });
     }
+
+    async top(guildId: string): Promise<any> {
+        // TODO: Fix this as any shit
+        const top = await (this._prisma.pet.groupBy as any)({
+            by: ['userId'],
+            where: {
+                guildId,
+            },
+            count: {
+                _all: true,
+            },
+        });
+
+        return top.sort((a, b) => b.count._all - a.count._all);
+    }
 }

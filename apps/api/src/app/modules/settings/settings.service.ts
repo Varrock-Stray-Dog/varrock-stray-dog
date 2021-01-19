@@ -7,7 +7,7 @@ export class SettingsService {
     constructor(private _prisma: PrismaClient) {}
 
     async findOneByGuildId(guildId: string) {
-        const settings = await this._prisma.settings.findOne({
+        const settings = await this._prisma.settings.findUnique({
             where: {
                 guildId,
             },
@@ -34,7 +34,7 @@ export class SettingsService {
     }
 
     public async getPrefix(guildId: string) {
-        const guild = await this._prisma.settings.findOne({
+        const guild = await this._prisma.settings.findUnique({
             where: {
                 guildId,
             },

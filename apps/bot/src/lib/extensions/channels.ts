@@ -18,7 +18,7 @@ import { MessageAdditions } from 'discord.js';
 import { woofify } from '../util/woofiy';
 
 const sendPrompt = (
-    channel: TextChannel | DMChannel | NewsChannel,
+    channel: TextChannel | DMChannel,
     author: User,
     message: IMessagePrompterMessage,
     options?: Partial<IMessagePrompterOptions> | IMessagePrompterOptionsType
@@ -31,16 +31,13 @@ export class StrayDogTextChannel extends Structures.get('TextChannel')
     implements TextChannel {
     woofSend(
         content: StringResolvable,
-        options?:
-            | MessageOptions
-            | (MessageOptions & { split?: false })
-            | MessageAdditions
+        options?: (MessageOptions & { split?: false }) | MessageAdditions
     ) {
         this.send(woofify(content), options);
     }
 
     prompt(
-        message: IMessagePrompterOptions,
+        message: IMessagePrompterMessage,
         author: User,
         options?: Partial<IMessagePrompterOptions> | IMessagePrompterOptionsType
     ) {
@@ -106,16 +103,13 @@ export class StrayDogDMChannel extends Structures.get('DMChannel')
 
     woofSend(
         content: StringResolvable,
-        options?:
-            | MessageOptions
-            | (MessageOptions & { split?: false })
-            | MessageAdditions
+        options?: (MessageOptions & { split?: false }) | MessageAdditions
     ) {
         this.send(woofify(content), options);
     }
 
     prompt(
-        message: IMessagePrompterOptions,
+        message: IMessagePrompterMessage,
         author: User,
         options?: Partial<IMessagePrompterOptions> | IMessagePrompterOptionsType
     ) {

@@ -18,7 +18,17 @@ import { canEditPet } from '../util/can-edit-pet';
     name: 'pet-add',
     description: 'Add a pet to your collection',
     strategyOptions: {
-        options: ['kills', 'kc', 'k', 'date', 'd', 'screenshot', 'ss'],
+        options: [
+            'kills',
+            'kc',
+            'k',
+            'experience',
+            'xp',
+            'date',
+            'd',
+            'screenshot',
+            'ss',
+        ],
     },
 })
 export default class extends StrayDogPetsCommand {
@@ -66,7 +76,9 @@ export default class extends StrayDogPetsCommand {
             );
         }
 
-        let kc = parseInt(args.getOption('kills', 'kc', 'k'));
+        let kc = parseInt(
+            args.getOption('kills', 'kc', 'k', 'experience', 'xp')
+        );
         if (!kc) {
             const prompt = (await message.prompt(
                 `At what ${
@@ -132,13 +144,12 @@ export default class extends StrayDogPetsCommand {
             name: petMetaData.name,
         };
 
-        const pet: PetModel = await this.context.client.nestjs.send(
-            'Pet/add',
-            createObj
-        );
+        await this.context.client.nestjs.send('Pet/add', createObj);
 
         return message.channel.woofSend(
-            `I have saved ${emoji} ${petMetaData.name} to your collection! :tada:`
+            `I have saved ${emoji} ${petMetaData.name} to ${
+                isSomeoneElse ? 'his/her' : 'your'
+            } collection! :tada:`
         );
     }
 }
