@@ -21,11 +21,12 @@
         "build:web": "yarn build -c production web",
         "build:bot": "yarn build -c production bot",
         "build:api": "yarn build -c production api",
-        "prisma:studio": "yarn prisma studio --experimental",
-        "migration:save": "yarn prisma migrate save --experimental",
-        "migration:up": "yarn prisma migrate up --experimental",
+        "prisma:studio": "yarn prisma studio --preview-feature",
+        "migration:save": "yarn prisma migrate dev --preview-feature",
+        "migration:deploy": "prisma migrate deploy --preview-feature",
+        "migration:deploy:prod": "prisma migrate deploy --preview-feature",
         "prisma:generate": "yarn prisma generate",
-        "prisma:complete": "yarn migration:save && yarn migration:up && yarn prisma:generate"
+        "prisma:complete": "yarn migration:save && yarn migration:deploy && yarn prisma:generate"
     },
     "private": true,
     "dependencies": {

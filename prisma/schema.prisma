@@ -1,39 +1,40 @@
-// This is your Prisma schema file,
-datasource db {
-	provider			= "postgresql"
-	url					= env("POSTGRES_URL")
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["groupBy"]
 }
 
-generator client {
-	provider			= "prisma-client-js"
-	previewFeatures 	= ["groupBy"]
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
 }
 
 model Settings {
-	id								String		@id	@default(uuid())
-	guildId							String		@unique
-	prefix							String		@default("~")
-	language						String		@default("en-US")
-	
-	pets_enabled					Boolean		@default(true)
-	pets_moderatorRole				String?
+  id                       String    @id @default(uuid())
+  guildId                  String    @unique
+  prefix                   String    @default("~")
+  language                 String    @default("en-US")
+  
+  pets_enabled             Boolean   @default(true)
+  pets_moderatorRole       String?
 
-	loot_enabled					Boolean		@default(true)
-	loot_moderatorRole				String?
-	loot_requireVerification		Boolean		@default(true)
-
-	createdAt 						DateTime	@default(now())
-	updatedAt 						DateTime?	@updatedAt
+  loot_enabled             Boolean   @default(true)
+  loot_requireVerification Boolean   @default(true)
+  loot_moderatorRole       String?
+  
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime? @updatedAt
 }
 
 model Pet {
-	id								String		@id @default(uuid())
-	userId							String
-	guildId							String
-	name							String
-	kc								Int
-	date							DateTime	@default(now())
+  id        String    @id @default(uuid())
+  
+  kc        Int
+  name      String
+  date      DateTime  @default(now())
+  
+  userId    String
+  guildId   String
 
-	createdAt 						DateTime	@default(now())
-	updatedAt 						DateTime?	@updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
 }
