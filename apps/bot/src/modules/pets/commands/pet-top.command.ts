@@ -3,6 +3,7 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { CommandOptions, Args } from '@sapphire/framework';
 import { StrayDogPetsCommand } from '../struct/stray-dog-pets-command';
 import { createLeaderBoardEmbed } from 'apps/bot/src/lib';
+import { PETS } from 'libs/constants/src/lib/pets';
 
 @ApplyOptions<CommandOptions>({
     name: 'pet-top',
@@ -28,7 +29,9 @@ export default class extends StrayDogPetsCommand {
             message.channel,
             top.map((t) => ({
                 userId: t.userId,
-                value: `${t.count._all} pets`,
+                value: `    ${t.count._all} pets | ${t.count._all}/${
+                    PETS.length
+                } | ${Math.round((t.count._all / PETS.length) * 100)}%`,
             })),
             chunkSize
         );
