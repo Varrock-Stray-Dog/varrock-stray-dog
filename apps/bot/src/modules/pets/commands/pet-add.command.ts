@@ -11,6 +11,7 @@ import {
     getMonth,
     getDate,
     format,
+    subDays,
 } from 'date-fns';
 import { canEditPet } from '../util/can-edit-pet';
 
@@ -72,7 +73,7 @@ export default class extends StrayDogPetsCommand {
                     isSomeoneElse ? 'has' : 'have'
                 } ${emoji} ${hasPet.name} registered at ${hasPet.kc}${
                     petMetaData.category === 'skilling' ? 'xp' : 'kc'
-                } on ${format(parseISO(hasPet.date as any), 'LLL. co, yyyy')}`
+                } on ${format(parseISO(hasPet.date as any), 'LLL. do, yyyy')}`
             );
         }
 
@@ -121,16 +122,27 @@ export default class extends StrayDogPetsCommand {
 
             date = prompt.content;
         }
+        date = date.toLowerCase();
 
-        const parsedDate = parseISO(
+        let parsedDate = parseISO(
             date
                 .split('-')
                 .map((v) => (v?.length === 1 ? `0${v}` : v))
                 .join('-')
         );
+
+        switch (date) {
+            case 'today':
+                parsedDate = new Date();
+                break;
+            case 'yesterday':
+                parsedDate = subDays(new Date(), 1);
+                break;
+        }
+
         if (!isValid(parsedDate)) {
             return message.channel.woofSend(
-                `That's not a valid date, try something along the lines of \`year-month-day\`.\nex: ${getYear(
+                `That's not a valid date, try something along the lines of \`year-month-day\`, \`today\` or \`yesterday\`.\nex: ${getYear(
                     new Date()
                 )}-${getMonth(new Date()) + 1}-${getDate(new Date())}`
             );

@@ -73,7 +73,7 @@ export default class extends StrayDogPetsCommand {
                     `${emoji} ${obtained.meta.name}`,
                     `Obtained on ${format(
                         parseISO(obtained?.date as any),
-                        'LLL. co, yyyy'
+                        'LLL. do, yyyy'
                     )} at ${obtained?.kc}${
                         obtained?.meta?.category === 'skilling' ? 'xp' : 'kc'
                     }`,
