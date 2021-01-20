@@ -59,13 +59,9 @@ export const createLeaderBoardEmbed = (
 
     if (chunked.length === 1) {
         handler.setActions([
-            {
-                id: '⏹️',
-                run: async ({ response, collector }) => {
-                    await response.reactions.removeAll();
-                    collector.stop();
-                },
-            },
+            PaginatedMessage.defaultActions[
+                PaginatedMessage.defaultActions?.length - 1
+            ],
         ]);
     }
 
